@@ -7,13 +7,13 @@ class Card extends Component {
     this.card = null;
     this.state = {
       opacity : this.props.opacity,
-      classList : this.props.classList || ""
+      classStr : this.props.classStr || ""
     };
   }
 
   componentDidMount() {
-    // When the component is mounted, add your DOM listener to the "nv" elem.
-    // (The "nv" elem is assigned in the render function.)
+    // When the component is mounted, add your DOM listener to the "card" elem.
+    // (The "card" elem is assigned in the render function.)
     this.card.addEventListener("dragstart", this.handleDragStart, false);
     this.card.addEventListener('dragenter', this.handleDragEnter, false);
     this.card.addEventListener('dragover', this.handleDragOver, false);
@@ -25,6 +25,11 @@ class Card extends Component {
   componentWillUnmount() {
     // Make sure to remove the DOM listener when the component is unmounted.
     this.card.removeEventListener("dragstart", this.handleDragStart);
+    this.card.removeEventListener('dragenter', this.handleDragEnter, false);
+    this.card.removeEventListener('dragover', this.handleDragOver, false);
+    this.card.removeEventListener('dragleave', this.handleDragLeave, false);
+    this.card.removeEventListener('drop', this.handleDrop, false);
+    this.card.removeEventListener('dragend', this.handleDragEnd, false);
   }
 
   // Use a class arrow function (ES7) for the handler. In ES6 you could bind()
@@ -32,6 +37,9 @@ class Card extends Component {
   // NOTE: prevState not necessary.
   handleDragStart = (event) => {
     this.setState(prevState => ({ opacity: 0.4 }));
+      // dragSrcEl = this.card;
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/html', this.innerHTML);
   }
 
   handleDragOver = (event) => {
@@ -41,28 +49,31 @@ class Card extends Component {
   }
 
   handleDragEnter = (event) => {
-    let newClassList = this.state.classList || [];
-    newClassList.push('over');
-    this.setState(prevState => ({ classList: newClassList}));
-    //this.setState(prevState => ({ classList: [...prevState, 'over']}));
+    const newClassStr = this.state.classStr + ' over';
+    this.setState(prevState => ({ classStr: newClassStr}));
+    //UNUSED this.setState(prevState => ({ classList: [...prevState, 'over']}));
   }
 
   handleDragLeave = (event) => {
-    if (this.state.className) {
-      const newClassList = this.state.classList.filter(str => str !== 'over')
-      this.setState(prevState => ({ classList: newClassList}));
-    }
+    const newClassStr = ""; // TODO should only remove the string 'over'
+    this.setState(prevState => ({ classStr: newClassStr}));
   }
 
   handleDrop = (event) => {
     if (event.stopPropagation) event.stopPropagation(); // stops the browser from redirecting.
-    // See the section on the DataTransfer object.
 
+    // Don't do anything if dropping the same column we're dragging.
+      // if (dragSrcEl != this.card) {
+      //   // Set the source column's HTML to the HTML of the column we dropped on.
+      //   dragSrcEl.innerHTML = this.innerHTML;
+      //   this.innerHTML = event.dataTransfer.getData('text/html');
+      // }
     return false;
   }
 
   handleDragEnd = (event) => {
     this.setState(prevState => ({ opacity: 1 }));
+    // TODO: remove 'over' from all other cards.
     // [].forEach.call(cols, function (col) {
     //   col.classList.remove('over');
     // });
@@ -76,14 +87,14 @@ class Card extends Component {
     const role = this.props.role;
     const pos = this.props.position;
     const op = this.state.opacity || 1;
-    const classList = this.state.classList || "";
+    const classStr = "role-card" + this.state.classStr;
     return (
       // Finally, render the div using a "ref" callback which assigns the mounted
       // elem to a class property "nv" used to add the DOM listener to.
       <div className={"Card " + pos}>
         {
           role in roleImgMap
-          ? <img className="role-card"
+          ? <img className={classStr}
                 ref={elem => this.card = elem}
                 src={roleImgMap[role]}
                 alt={role}
@@ -94,7 +105,6 @@ class Card extends Component {
                 ref={elem => this.card = elem}
                 draggable="false">
             </div>
-
         }
       </div>
     );
