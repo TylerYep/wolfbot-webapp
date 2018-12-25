@@ -1,0 +1,38 @@
+.GameBoard {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 60%;
+}
+
+.board-top {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 25%;
+}
+
+.board-left {
+  display: inline;
+  position: absolute;
+  top: 15%;
+  left: 0;
+}
+
+.board-right {
+  display: inline;
+  position: absolute;
+  top: 15%;
+  right: 0;
+}
+
+.board-bottom {
+  display: inline;
+  position: absolute;
+  left: 25%;
+  bottom: 0;
+}
+
+.board-middle {
+
+}

@@ -1,0 +1,13 @@
+.Card {
+  height: 100%;
+  width: 100%;
+}
+
+.Card.top, .Card.bottom  {
+  display: inline;
+}
+
+.Card img {
+  height: 140px;
+  width: 100px;
+}
