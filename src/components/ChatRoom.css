@@ -1,9 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Pacifico');
 
 body {
   margin: 0;
-
 }
 
 p {
@@ -15,9 +13,7 @@ p {
   width: 360px;
   height: 100%;
   background-color: rgba(0,0,0, .7);
-  border-radius: 5px;
   display: inline-block;
-  box-shadow: 0 0 8px 0 rgba(0,0,0, 0.3);
 }
 
 .chatroom h3 {
@@ -35,7 +31,7 @@ p {
 .chatroom .chats {
   box-sizing: border-box;
   padding: 0 20px;
-  margin: 10px 0 0;
+  margin: 0;
   height: 100%;
   overflow-y: scroll;
 }

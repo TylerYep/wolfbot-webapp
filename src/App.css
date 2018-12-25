@@ -1,5 +1,7 @@
 .App {
-  background-color: #282c34;
+  background-color: grey;
+
+  /* background-color: #282c34; */
   position: absolute;
   height: 100%;
   width: 100%;

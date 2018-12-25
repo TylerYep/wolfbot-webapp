@@ -1,9 +1,12 @@
 .InventoryScroll {
-  /* position: absolute;
-  top: 0; */
   vertical-align: top;
   display: inline-block;
   height: 100%;
   width: 9%;
   overflow-y: scroll;
+  background-color: green;
+}
+
+.Card.side {
+
 }

@@ -1,13 +1,29 @@
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .Card {
   height: 100%;
   width: 100%;
+  margin: 5px;
+  margin-bottom: 0;
+  cursor: move;
 }
 
 .Card.top, .Card.bottom  {
   display: inline;
 }
 
-.Card img {
+.Card .role-card {
   height: 140px;
   width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.role-card.placeholder, .over {
+  border: 4px dotted white;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChatRoom from './components/ChatRoom.js';
+// import ChatRoom from './components/ChatRoom.js';
 import GameBoard from './components/GameBoard.js';
 import InventoryScroll from './components/InventoryScroll.js';
 
@@ -9,7 +9,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <ChatRoom />
+        {
+          // <ChatRoom />
+        }
         <GameBoard />
         <InventoryScroll />
       </div>
