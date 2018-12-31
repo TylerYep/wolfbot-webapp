@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Card from './Card.js';
 import './GameBoard.css';
+import store from '../store.js';
+import { connect } from 'react-redux'
+
 
 // Drag and Drop tutorial:
 // https://www.html5rocks.com/en/tutorials/dnd/basics/
@@ -31,7 +34,8 @@ class GameBoard extends Component {
   }
 
   render() {
-    const { players } = this.state;
+    console.log(store.getState().cards)
+    const { players } = store.getState().cards.length > 0 ? store.getState().cards : this.state;
     let id_counter = 0;
     return (
       <div className="GameBoard">
@@ -61,4 +65,10 @@ class GameBoard extends Component {
   }
 }
 
-export default GameBoard;
+const mapStateToProps = (state, ownProps) => (
+  state.cards[ownProps.id]
+  ? state.cards[ownProps.id]
+  : ownProps
+);
+
+export default connect(mapStateToProps)(GameBoard);

@@ -1,5 +1,5 @@
 import { createReducer } from 'redux-starter-kit'
-import { addCard, setCardAtIndex, swapCardsAtIndex, addOver, removeOver } from './actions'
+import { addCard, setCardAtIndex, swapCardsAtIndex, addOver, removeOver, setFrom, setTo } from './actions'
 
 // No need to use functional programming thanks to createReducer's implementation
 const cardListReducer = createReducer({ cards: [] }, {
@@ -10,25 +10,36 @@ const cardListReducer = createReducer({ cards: [] }, {
     return state;
   },
 
-  [swapCardsAtIndex]: (state, action) => { // Payload is {index1: 1, index2: 2}
-    const temp = state.cards[action.payload.index1];
-    state.cards[action.payload.index1] = state.cards[action.payload.index2];
-    state.cards[action.payload.index2] = temp;
-    return state;
+  [swapCardsAtIndex]: (state, action) => {
+    const temp = state.cards[state.from];
+    state.cards[state.from] = state.cards[state.to];
+    state.cards[state.to] = temp;
+    // return state;
   },
 
   [addOver]: (state, action) => {
-    cards: state.cards.map(card =>
+    state.cards.map(card =>
       card.id === action.payload ? card.opacity = 0.4 : card.classStr = "role-card over"
     )
   },
 
   [removeOver]: (state, action) => { // Payload is {index: 1, newCard: Card_obj}
-    cards: state.cards.map(card => {
+    state.cards.map(card => {
       card.opacity = 1;
       card.classStr = "role-card";
+      return card;
     })
-  }
+  },
+
+  [setFrom]: (state, action) => ({
+    ...state,
+    from: action.payload
+  }),
+
+  [setTo]: (state, action) => ({
+    ...state,
+    to: action.payload
+  })
 });
 
 export default cardListReducer;
