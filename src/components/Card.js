@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import './Card.css';
+import store from '../store.js';
+import { addCard, addOver, removeOver } from '../actions.js';
 
 class Card extends Component {
   constructor(props) {
     super(props);
     this.card = null;
     this.state = {
-      opacity : this.props.opacity,
-      classStr : this.props.classStr || ""
+      id : this.props.id,
+      opacity : this.props.opacity || 1,
+      classStr : this.props.classStr || "role-card"
     };
   }
 
   componentDidMount() {
     // When the component is mounted, add your DOM listener to the "card" elem.
     // (The "card" elem is assigned in the render function.)
+    store.dispatch(addCard(this.state));
     this.card.addEventListener("dragstart", this.handleDragStart, false);
     this.card.addEventListener('dragenter', this.handleDragEnter, false);
     this.card.addEventListener('dragover', this.handleDragOver, false);
@@ -36,10 +41,21 @@ class Card extends Component {
   // a handler in the constructor.
   // NOTE: prevState not necessary.
   handleDragStart = (event) => {
-    this.setState(prevState => ({ opacity: 0.4 }));
-      // dragSrcEl = this.card;
-      event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.setData('text/html', this.innerHTML);
+    this.setState(prevState => ({ id: prevState.id, opacity: 0.4 }));
+    // dragSrcEl = this.card;
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/html', this.innerHTML);
+    store.dispatch(addOver(this.state.id));
+    console.log(store.getState())
+  }
+
+  handleDragEnter = (event) => {
+    // const newClassStr = this.state.classStr + ' over';
+    // this.setState(prevState => ({ classStr: newClassStr}));
+
+    // store.dispatch(addOver(this.state.id));
+
+    //UNUSED this.setState(prevState => ({ classList: [...prevState, 'over']}));
   }
 
   handleDragOver = (event) => {
@@ -48,19 +64,16 @@ class Card extends Component {
     return false;
   }
 
-  handleDragEnter = (event) => {
-    const newClassStr = this.state.classStr + ' over';
-    this.setState(prevState => ({ classStr: newClassStr}));
-    //UNUSED this.setState(prevState => ({ classList: [...prevState, 'over']}));
-  }
 
   handleDragLeave = (event) => {
-    const newClassStr = ""; // TODO should only remove the string 'over'
-    this.setState(prevState => ({ classStr: newClassStr}));
+    // const newClassStr = ""; // TODO should only remove the string 'over'
+    // this.setState(prevState => ({ classStr: newClassStr}));
+    // store.dispatch(removeOver());
   }
 
   handleDrop = (event) => {
     if (event.stopPropagation) event.stopPropagation(); // stops the browser from redirecting.
+    this.setState(prevState => ({ id: prevState.id, opacity: 1 }));
 
     // Don't do anything if dropping the same column we're dragging.
       // if (dragSrcEl != this.card) {
@@ -72,25 +85,41 @@ class Card extends Component {
   }
 
   handleDragEnd = (event) => {
-    this.setState(prevState => ({ opacity: 1 }));
+    this.setState(prevState => ({ id: prevState.id, opacity: 1 }));
     // TODO: remove 'over' from all other cards.
     // [].forEach.call(cols, function (col) {
     //   col.classList.remove('over');
     // });
+
+    store.dispatch(removeOver());
+    console.log(store.getState())
+
   }
 
   render() {
     const roleImgMap = {
-      "Seer" : "https://i.imgur.com/Z25oarU.png",
-      "Villager" : "https://i.imgur.com/rW7lge3.png"
+      "Seer" : require('../img/seer.png'),
+      "Villager" : require('../img/villager.png'),
+      "Wolf" : require('../img/wolf.jpg'),
+      "Robber" : require('../img/robber.jpg'),
+      "Drunk" : require('../img/drunk.jpg'),
+      "Hunter" : require('../img/hunter.png'),
+      "Troublemaker" : require('../img/troublemaker.jpg'),
+      "Mason" : require('../img/mason.jpg'),
+      "Tanner" : require('../img/tanner.png'),
+      "Minion" : require('../img/minion.jpg'),
+      "Insomniac" : require('../img/insomniac.png')
     }
     const role = this.props.role;
     const pos = this.props.position;
-    const op = this.state.opacity || 1;
-    const classStr = "role-card" + this.state.classStr;
+    const id = this.props.id;
+
+    const op = store.getState().cards[id] ? store.getState().cards[id].opacity : 1;
+    // const classStr = "role-card" + this.state.classStr;
+    const classStr = store.getState().cards[id] ? store.getState().cards[id].classStr : "role-card";
     return (
       // Finally, render the div using a "ref" callback which assigns the mounted
-      // elem to a class property "nv" used to add the DOM listener to.
+      // elem to a class property "card" used to add the DOM listener to.
       <div className={"Card " + pos}>
         {
           role in roleImgMap
@@ -111,4 +140,14 @@ class Card extends Component {
   }
 }
 
-export default Card;
+const mapStateToProps = (state, ownProps) => (
+  state.cards[ownProps.id]
+  ? state.cards[ownProps.id]
+  : ownProps
+);
+
+const mapDispatchToProps = dispatch => ({
+  //onClick: () => dispatch(setVisibilityFilter(ownProps.filter))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
