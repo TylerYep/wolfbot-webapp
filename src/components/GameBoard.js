@@ -3,6 +3,7 @@ import Card from './Card.js';
 import './GameBoard.css';
 import store from '../store.js';
 import { connect } from 'react-redux'
+import { increment_ids } from '../actions.js';
 
 
 // Drag and Drop tutorial:
@@ -32,32 +33,43 @@ class GameBoard extends Component {
       ]
     };
   }
-
   render() {
-    console.log(store.getState().cards)
     const { players } = store.getState().cards.length > 0 ? store.getState().cards : this.state;
-    let id_counter = 0;
+    let id_counter = store.getState().id_counter;
+    let playersZip = []
+    for (let i = id_counter; i < id_counter + players.length; i++) {
+      playersZip.push([players[i - id_counter], i]);
+    }
+    store.dispatch(increment_ids(players.length));
     return (
       <div className="GameBoard">
         <div className="board-top">
         {
-          players.slice(0, 4).map((role) => <Card id={id_counter++} position="top" role = {role} /> )
+          playersZip.slice(0, 4).map(role =>
+            <Card id={role[1]} position="top" role={role[0]} />
+          )
         }
         </div>
         <div className="board-left">
         {
-          players.slice(4, 8).map((role) => <Card id={id_counter++} position="left" role = {role}/> )
+          playersZip.slice(4, 8).map(role =>
+            <Card id={role[1]} position="left" role={role[0]} />
+          )
         }
         </div>
 
         <div className="board-right">
         {
-          players.slice(8, 12).map((role) => <Card id={id_counter++} position="right" role = {role} /> )
+          playersZip.slice(8, 12).map(role =>
+            <Card id={role[1]} position="right" role={role[0]} />
+          )
         }
         </div>
         <div className="board-bottom">
         {
-          players.slice(12, 16).map((role) => <Card id={id_counter++} position="bottom" role = {role} /> )
+          playersZip.slice(12, 16).map(role =>
+            <Card id={role[1]} position="bottom" role={role[0]} />
+          )
         }
         </div>
       </div>

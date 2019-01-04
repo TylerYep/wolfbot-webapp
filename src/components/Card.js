@@ -42,7 +42,6 @@ class Card extends Component {
   // a handler in the constructor.
   // NOTE: prevState not necessary.
   handleDragStart = (event) => {
-    this.setState(prevState => ({ id: prevState.id, opacity: 0.4 }));
     store.dispatch(addOver(this.state.id));
     store.dispatch(setFrom(this.state.id));
     console.log(store.getState())
@@ -70,8 +69,6 @@ class Card extends Component {
 
   handleDragEnd = (event) => {
     store.dispatch(removeOver());
-    // store.dispatch(swapCardsAtIndex());
-    // console.log(store.getState())
   }
 
   render() {

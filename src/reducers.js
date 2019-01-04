@@ -1,9 +1,11 @@
 import { createReducer } from 'redux-starter-kit'
-import { addCard, setCardAtIndex, swapCardsAtIndex, addOver, removeOver, setFrom, setTo } from './actions'
+import { addCard, setCardAtIndex, swapCardsAtIndex, addOver, removeOver, setFrom, setTo, increment_ids} from './actions'
 
 // No need to use functional programming thanks to createReducer's implementation
-const cardListReducer = createReducer({ cards: [] }, {
-  [addCard]: (state, action) => ({cards: [...state.cards, action.payload]}), // Payload is a Card obj
+const cardListReducer = createReducer({ cards: [] , id_counter: 0}, {
+  [increment_ids]: (state, action) => ({...state, id_counter: state.id_counter + action.payload}),
+
+  [addCard]: (state, action) => ({...state, cards: [...state.cards, action.payload]}), // Payload is a Card obj
 
   [setCardAtIndex]: (state, action) => { // Payload is {index: 1, newCard: Card_obj}
     state.cards[action.payload.index] = action.payload.newCard;

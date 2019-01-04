@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-// import ChatRoom from './ChatRoom.js';
+import ChatRoom from './ChatRoom.js';
 import GameBoard from './GameBoard.js';
 import InventoryScroll from './InventoryScroll.js';
 
@@ -10,12 +10,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {
-          // <ChatRoom />
-          // <InventoryScroll />
-
-        }
-        <GameBoard />
+{       // <ChatRoom />
+}        <GameBoard />
+        <InventoryScroll />
       </div>
     );
   }
