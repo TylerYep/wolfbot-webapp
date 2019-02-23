@@ -9,26 +9,39 @@ class InventoryScroll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roles: [
+      players: [
         "Seer",
+        "Wolf",
+        "Wolf",
+        "Minion",
+        "Tanner",
+        "Drunk",
+        "Troublemaker",
         "Villager",
-        "Wolf"
+        "Insomniac",
+        "Hunter",
+        "Mason",
+        "Villager",
+        "Robber",
+        "Villager",
+        "Villager",
+        "Mason"
       ]
     };
   }
 
   render() {
-    const { roles } = this.state;
+    const { players } = store.getState().cards.length > 0 ? store.getState().cards : this.state;
     let id_counter = store.getState().id_counter;
-    let rolesZip = []
-    for (let i = id_counter; i < id_counter + roles.length; i++) {
-      rolesZip.push([roles[i - id_counter], i]);
+    let playersZip = []
+    for (let i = 0; i < players.length; i++) {
+      playersZip.push([players[i], i + id_counter]);
     }
-    store.dispatch(increment_ids(roles.length));
+    store.dispatch(increment_ids(players.length));
     return (
       <div className="InventoryScroll">
       {
-        rolesZip.map(role =>
+        playersZip.map(role =>
           <Card id={role[1]} position="side" role={role[0]} />
         )
       }

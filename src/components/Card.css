@@ -28,4 +28,6 @@
 
 .role-card.placeholder, .over {
   border: 4px dotted white;
+  cursor: auto;
+
 }

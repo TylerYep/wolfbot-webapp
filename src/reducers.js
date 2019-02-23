@@ -16,7 +16,6 @@ const cardListReducer = createReducer({ cards: [] , id_counter: 0}, {
     const temp = state.cards[state.from];
     state.cards[state.from] = state.cards[state.to];
     state.cards[state.to] = temp;
-    // return state;
   },
 
   [addOver]: (state, action) => {

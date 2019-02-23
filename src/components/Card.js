@@ -44,11 +44,9 @@ class Card extends Component {
   handleDragStart = (event) => {
     store.dispatch(addOver(this.state.id));
     store.dispatch(setFrom(this.state.id));
-    console.log(store.getState())
   }
 
   handleDragEnter = (event) => {
-    console.log('enter' + this.state.id)
     store.dispatch(setTo(this.state.id));
   }
 
@@ -68,11 +66,16 @@ class Card extends Component {
   }
 
   handleDragEnd = (event) => {
+    console.log(store.getState())
+
     store.dispatch(removeOver());
+    // console.log(store.getState())
+
   }
 
   render() {
     const roleImgMap = {
+      "" : require('../img/placeholder.png'),
       "Seer" : require('../img/seer.png'),
       "Villager" : require('../img/villager.png'),
       "Wolf" : require('../img/wolf.jpg'),
@@ -96,7 +99,7 @@ class Card extends Component {
       // elem to a class property "card" used to add the DOM listener to.
       <div className={"Card " + pos}>
         {
-          role in roleImgMap
+          role in roleImgMap && role !== ""
           ? <img className={classStr}
                 ref={elem => this.card = elem}
                 src={roleImgMap[role]}
@@ -104,10 +107,13 @@ class Card extends Component {
                 style={{opacity: op}}
                 draggable="true">
             </img>
-          : <div className="role-card placeholder"
+          : <img className={"role-card placeholder"}
                 ref={elem => this.card = elem}
+                src={roleImgMap[role]}
+                alt={role}
+                style={{opacity: op}}
                 draggable="false">
-            </div>
+            </img>
         }
       </div>
     );

@@ -5,40 +5,23 @@ import store from '../store.js';
 import { connect } from 'react-redux'
 import { increment_ids } from '../actions.js';
 
-
 // Drag and Drop tutorial:
 // https://www.html5rocks.com/en/tutorials/dnd/basics/
 class GameBoard extends Component {
   constructor(props) {
     super(props);
+    let blank_arr = []
+    for (let i = 0; i < 16; i++) blank_arr.push("");
     this.state = {
-      players: [
-        "",
-        "Seer",
-        "Wolf",
-        "Wolf",
-        "Minion",
-        "Tanner",
-        "Drunk",
-        "Troublemaker",
-        "Villager",
-        "Insomniac",
-        "Hunter",
-        "Mason",
-        "Villager",
-        "Robber",
-        "Villager",
-        "Seer",
-        "Mason"
-      ]
+      players: blank_arr
     };
   }
   render() {
     const { players } = store.getState().cards.length > 0 ? store.getState().cards : this.state;
     let id_counter = store.getState().id_counter;
     let playersZip = []
-    for (let i = id_counter; i < id_counter + players.length; i++) {
-      playersZip.push([players[i - id_counter], i]);
+    for (let i = 0; i < players.length; i++) {
+      playersZip.push([players[i], i + id_counter]);
     }
     store.dispatch(increment_ids(players.length));
     return (
