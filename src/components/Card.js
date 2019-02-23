@@ -67,10 +67,7 @@ class Card extends Component {
 
   handleDragEnd = (event) => {
     console.log(store.getState())
-
     store.dispatch(removeOver());
-    // console.log(store.getState())
-
   }
 
   render() {

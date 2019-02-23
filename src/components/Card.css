@@ -23,11 +23,9 @@
   display: inline-block;
   vertical-align: middle;
   border: 4px solid white;
-
 }
 
 .role-card.placeholder, .over {
   border: 4px dotted white;
   cursor: auto;
-
 }
