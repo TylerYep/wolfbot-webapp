@@ -11,7 +11,10 @@ class GameBoard extends Component {
   constructor(props) {
     super(props);
     let blank_arr = []
-    for (let i = 0; i < 16; i++) blank_arr.push("");
+    for (let i = 0; i < 16; i++) {
+      blank_arr.push("");
+    }
+
     this.state = {
       players: blank_arr
     };
@@ -61,9 +64,7 @@ class GameBoard extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => (
-  state.cards[ownProps.id]
-  ? state.cards[ownProps.id]
-  : ownProps
+  state.cards[ownProps.id] ? state.cards[ownProps.id] : ownProps
 );
 
 export default connect(mapStateToProps)(GameBoard);

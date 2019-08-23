@@ -65,18 +65,17 @@ class ChatRoom extends React.Component {
 
   submitMessage(e) {
     e.preventDefault();
-
-    this.setState({
-      chats: this.state.chats.concat([{
-        username: "Kevin Hsu",
-        content: < p > {
-          ReactDOM.findDOMNode(this.refs.msg).value
-        } < /p>,
-        img: "http://i.imgur.com/Tj5DGiO.jpg",
-      }])
-    }, () => {
-      ReactDOM.findDOMNode(this.refs.msg).value = "";
-    });
+    if (ReactDOM.findDOMNode(this.refs.msg).value !== "") {
+      this.setState({
+        chats: this.state.chats.concat([{
+          username: "Kevin Hsu",
+          content: <p>{ReactDOM.findDOMNode(this.refs.msg).value}</p>,
+          img: "http://i.imgur.com/Tj5DGiO.jpg",
+        }])
+      }, () => {
+        ReactDOM.findDOMNode(this.refs.msg).value = "";
+      });
+    }
   }
 
   render() {
@@ -86,9 +85,7 @@ class ChatRoom extends React.Component {
     return (
       <div className = "chatroom">
         <ul className = "chats" ref = "chats">
-        {
-          chats.map((chat) => <Message chat = {chat} user = {username}/> )
-        }
+        {chats.map((chat) => <Message chat = {chat} user = {username}/> )}
         </ul>
       <form className = "input" onSubmit = {(e) => this.submitMessage(e)}>
         <input type = "text" ref = "msg"/>

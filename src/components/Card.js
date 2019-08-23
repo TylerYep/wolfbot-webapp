@@ -66,7 +66,7 @@ class Card extends Component {
   }
 
   handleDragEnd = (event) => {
-    console.log(store.getState())
+    console.log(store.getState());
     store.dispatch(removeOver());
   }
 
@@ -118,9 +118,7 @@ class Card extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => (
-  state.cards[ownProps.id]
-  ? state.cards[ownProps.id]
-  : ownProps
+  state.cards[ownProps.id] ? state.cards[ownProps.id] : ownProps
 );
 
 const mapDispatchToProps = dispatch => ({

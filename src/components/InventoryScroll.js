@@ -51,9 +51,7 @@ class InventoryScroll extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => (
-  state.cards[ownProps.id]
-  ? state.cards[ownProps.id]
-  : ownProps
+  state.cards[ownProps.id] ? state.cards[ownProps.id] : ownProps
 );
 
 export default connect(mapStateToProps)(InventoryScroll);
