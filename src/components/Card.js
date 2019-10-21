@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import './Card.css';
+import '../styles/Card.css';
 import store from '../store.js';
 import { addCard, addOver, removeOver, swapCardsAtIndex, setFrom, setTo } from '../actions.js';
 

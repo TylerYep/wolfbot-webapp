@@ -4,7 +4,7 @@ import ChatRoom from './ChatRoom.js';
 import GameBoard from './GameBoard.js';
 import InventoryScroll from './InventoryScroll.js';
 
-import './App.css';
+import '../styles/App.css';
 
 class App extends Component {
   render() {

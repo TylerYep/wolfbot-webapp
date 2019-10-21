@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card.js';
-import './GameBoard.css';
+import '../styles/GameBoard.css';
 import store from '../store.js';
 import { connect } from 'react-redux'
 import { increment_ids } from '../actions.js';
