@@ -1,47 +1,69 @@
-import { createReducer } from 'redux-starter-kit'
-import { addCard, setCardAtIndex, swapCardsAtIndex, addOver, removeOver, setFrom, setTo, increment_ids} from './actions'
+import { createReducer } from "redux-starter-kit";
+import {
+  addCard,
+  setCardAtIndex,
+  swapCardsAtIndex,
+  addOver,
+  removeOver,
+  setFrom,
+  setTo,
+  increment_ids,
+} from "./actions";
 
 // No need to use functional programming thanks to createReducer's implementation
-const cardListReducer = createReducer({ cards: [] , id_counter: 0}, {
-  [increment_ids]: (state, action) => ({...state, id_counter: state.id_counter + action.payload}),
+const cardListReducer = createReducer(
+  { cards: [], id_counter: 0 },
+  {
+    [increment_ids]: (state, action) => ({
+      ...state,
+      id_counter: state.id_counter + action.payload,
+    }),
 
-  [addCard]: (state, action) => ({...state, cards: [...state.cards, action.payload]}), // Payload is a Card obj
+    [addCard]: (state, action) => ({
+      ...state,
+      cards: [...state.cards, action.payload],
+    }), // Payload is a Card obj
 
-  [setCardAtIndex]: (state, action) => { // Payload is {index: 1, newCard: Card_obj}
-    state.cards[action.payload.index] = action.payload.newCard;
-    return state;
-  },
+    [setCardAtIndex]: (state, action) => {
+      // Payload is {index: 1, newCard: Card_obj}
+      state.cards[action.payload.index] = action.payload.newCard;
+      return state;
+    },
 
-  [swapCardsAtIndex]: (state, action) => {
-    const temp = state.cards[state.from];
-    state.cards[state.from] = state.cards[state.to];
-    state.cards[state.to] = temp;
-  },
+    [swapCardsAtIndex]: (state, action) => {
+      const temp = state.cards[state.from];
+      state.cards[state.from] = state.cards[state.to];
+      state.cards[state.to] = temp;
+    },
 
-  [addOver]: (state, action) => {
-    state.cards.map(card =>
-      card.id === action.payload ? card.opacity = 0.4 : card.classStr = "role-card over"
-    )
-  },
+    [addOver]: (state, action) => {
+      state.cards.map((card) =>
+        card.id === action.payload
+          ? (card.opacity = 0.4)
+          : (card.classStr = "role-card over")
+      );
+    },
 
-  [removeOver]: (state, action) => { // Payload is {index: 1, newCard: Card_obj}
-    state.cards.map(card => {
-      card.opacity = 1;
-      card.classStr = "role-card";
-      return card;
-    })
-  },
+    [removeOver]: (state, action) => {
+      // Payload is {index: 1, newCard: Card_obj}
+      state.cards.map((card) => {
+        card.opacity = 1;
+        card.classStr = "role-card";
+        return card;
+      });
+    },
 
-  [setFrom]: (state, action) => ({
-    ...state,
-    from: action.payload
-  }),
+    [setFrom]: (state, action) => ({
+      ...state,
+      from: action.payload,
+    }),
 
-  [setTo]: (state, action) => ({
-    ...state,
-    to: action.payload
-  })
-});
+    [setTo]: (state, action) => ({
+      ...state,
+      to: action.payload,
+    }),
+  }
+);
 
 export default cardListReducer;
 

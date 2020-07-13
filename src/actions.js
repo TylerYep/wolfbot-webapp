@@ -1,10 +1,10 @@
-import { createAction } from 'redux-starter-kit'
+import { createAction } from "redux-starter-kit";
 
-export const addCard = createAction('addCard')
-export const setCardAtIndex = createAction('setCardAtIndex')
-export const swapCardsAtIndex = createAction('swapCardsAtIndex')
-export const addOver = createAction('addOver')
-export const removeOver = createAction('removeOver')
-export const setFrom = createAction('setFrom')
-export const setTo = createAction('setTo')
-export const increment_ids = createAction('increment_ids')
+export const addCard = createAction("addCard");
+export const setCardAtIndex = createAction("setCardAtIndex");
+export const swapCardsAtIndex = createAction("swapCardsAtIndex");
+export const addOver = createAction("addOver");
+export const removeOver = createAction("removeOver");
+export const setFrom = createAction("setFrom");
+export const setTo = createAction("setTo");
+export const increment_ids = createAction("increment_ids");

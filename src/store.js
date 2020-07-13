@@ -1,5 +1,5 @@
-import { configureStore } from 'redux-starter-kit';
-import cardListReducer from './reducers';
+import { configureStore } from "redux-starter-kit";
+import cardListReducer from "./reducers";
 
 const store = configureStore({ reducer: cardListReducer });
 
